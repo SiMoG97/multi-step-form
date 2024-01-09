@@ -20,7 +20,7 @@ export default function StepFour({ direction }: { direction: number }) {
         {allValues.portfolioGithubLink ? (
           <ReviewCard
             title="Portfolio/GitHub Link"
-            details="github.com/rishipurwar1"
+            details={allValues.portfolioGithubLink}
           />
         ) : null}
         <ReviewCard title="Skill Level" details={allValues.skillLevel} />

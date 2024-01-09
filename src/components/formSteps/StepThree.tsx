@@ -31,7 +31,8 @@ export default function StepThree({ direction }: { direction: number }) {
         />
         <Checkbox id="vuejs" label="Vue.js" {...register("challengePref")} />
       </div>
-      {errors.challengePref?.type === "invalid_type" ? (
+      {errors.challengePref?.type === "invalid_type" ||
+      errors.challengePref?.type === "too_small" ? (
         <p className="text-xs text-red-500">Select at least one challenge</p>
       ) : null}
     </AnimatedDiv>

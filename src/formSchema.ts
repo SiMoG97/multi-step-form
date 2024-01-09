@@ -1,8 +1,5 @@
 import * as z from "zod";
 
-// const phoneRegEx =
-//   "/^s*(?:+?(d{1,3}))?[-. (]*(d{3})[-. )]*(d{3})[-. ]*(d{4})(?: *x(d+))?s*$/";
-
 const formSchema = z.object({
   fullName: z
     .string()
@@ -14,7 +11,7 @@ const formSchema = z.object({
   }),
   portfolioGithubLink: z.string(),
   skillLevel: z.string(),
-  challengePref: z.string().array(),
+  challengePref: z.string().array().nonempty(),
 });
 
 export type FormInputsT = z.infer<typeof formSchema>;
