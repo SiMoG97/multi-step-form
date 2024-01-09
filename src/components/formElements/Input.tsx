@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import { ComponentProps, forwardRef } from "react";
 
 type InputProps = {
@@ -16,7 +17,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function (
       </label>
       <input
         id={id}
-        className="block h-[40px] rounded-[10px] border px-3 py-2 text-sm outline-none placeholder:text-myGray-400 focus:border-myOrange-500"
+        className={cn(
+          "block h-[40px] rounded-[10px] border px-3 py-2 text-sm outline-none placeholder:text-myGray-400 focus:border-myOrange-500",
+          errorMessage ? "border-red-500" : "",
+        )}
         ref={ref}
         {...props}
       />
