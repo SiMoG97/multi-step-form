@@ -25,27 +25,27 @@ export default function AnimatedDiv({
 
   const nextStep: Variants = {
     initial: (direction) => ({
-      scale: 0.8,
-      opacity: 0,
-      x: `${25 * direction}%`,
+      // scale: 0.8,
+      // opacity: 0,
+      x: `${100 * direction}%`,
     }),
 
     enter: {
       scale: 1,
-      opacity: 1,
+      // opacity: 1,
       x: "0%",
       transition: {
-        ease: [0.76, 0, 0.24, 1],
+        // ease: [0.76, 0, 0.24, 1],
         duration: 0.15,
       },
     },
 
     exit: (direction) => ({
-      opacity: 0,
-      scale: 0.8,
-      x: `${-25 * direction}%`,
+      // opacity: 0,
+      // scale: 0.8,
+      x: `${-100 * direction}%`,
       transition: {
-        ease: [0.76, 0, 0.24, 1],
+        // ease: [0.76, 0, 0.24, 1],
         duration: 0.15,
       },
     }),
