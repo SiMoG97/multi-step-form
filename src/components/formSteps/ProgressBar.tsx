@@ -3,20 +3,19 @@ import AnimatedDiv from "@components/AnimatedDiv";
 
 export default function ProgressBar({ step }: { step: number }) {
   return (
-    <AnimatedDiv
-      direction={1}
-      className="flex select-none items-center justify-between gap-4 border-b-2 border-myGray-200 px-5 pb-8"
-    >
-      <StepCircle step={1} fill />
+    <AnimatedDiv step={step === 4 ? 1 : 0} className="px-3 xs:px-5 md:px-8">
+      <div className="flex select-none items-center justify-between gap-4 border-b-2 border-myGray-200 px-5 py-5  md:py-8">
+        <StepCircle step={1} fill />
 
-      <StepBar fill={step + 1 >= 2} />
-      <StepCircle step={2} fill={step + 1 >= 2} />
+        <StepBar fill={step + 1 >= 2} />
+        <StepCircle step={2} fill={step + 1 >= 2} />
 
-      <StepBar fill={step + 1 >= 3} />
-      <StepCircle step={3} fill={step + 1 >= 3} />
+        <StepBar fill={step + 1 >= 3} />
+        <StepCircle step={3} fill={step + 1 >= 3} />
 
-      <StepBar fill={step + 1 >= 4} />
-      <StepCircle fill={step + 1 >= 4} step={4} />
+        <StepBar fill={step + 1 >= 4} />
+        <StepCircle fill={step + 1 >= 4} step={4} />
+      </div>
     </AnimatedDiv>
   );
 }

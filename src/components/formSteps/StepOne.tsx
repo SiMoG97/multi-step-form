@@ -1,30 +1,39 @@
 import { useFormContext } from "react-hook-form";
 import { Input } from "@components/formElements";
 import { FormInputsT } from "@/formSchema";
-import AnimatedDiv from "@components/AnimatedDiv";
+import { StepContainer } from ".";
+import AnimatedDiv from "../AnimatedDiv";
+
+// import { motion } from "framer-motion";
 
 export default function StepOne({
-  direction,
   nextBtnRef,
+  step,
 }: {
-  direction: number;
   nextBtnRef: React.RefObject<HTMLButtonElement>;
+  step: number;
 }) {
   const {
     register,
     formState: { errors },
   } = useFormContext<FormInputsT>();
   return (
-    <AnimatedDiv className="flex flex-col gap-7" direction={direction}>
-      <div>
-        <h2 className="mb-2 text-2xl font-medium">Personal Information</h2>
-        <p className="text-sm text-myGray-500">
-          Please provide your personal details so we can get to know you better.
-        </p>
-      </div>
-      <div className="grid gap-x-10 gap-y-6 md:grid-cols-2 ">
+    <StepContainer className="flex flex-col gap-7">
+      <AnimatedDiv
+        variant="staggered"
+        className="grid gap-x-10 gap-y-6 md:grid-cols-2 "
+        shouldAnimate={step === 0}
+      >
+        <div className="mb-4">
+          <h2 className="mb-2 text-2xl font-medium">Personal Information</h2>
+          <p className="text-sm text-myGray-500">
+            Please provide your personal details so we can get to know you
+            better.
+          </p>
+        </div>
         <Input
           label="Full Name"
+          disabled={step !== 0}
           placeholder="Rishi Purwar"
           id="fullName"
           errorMessage={errors.fullName?.message}
@@ -38,6 +47,7 @@ export default function StepOne({
         />
         <Input
           type="email"
+          disabled={step !== 0}
           label="Email Address"
           placeholder="name@email.com"
           id="emailAddress"
@@ -52,6 +62,7 @@ export default function StepOne({
         />
         <Input
           type="tel"
+          disabled={step !== 0}
           label="Phone Number"
           placeholder="+91 1234567890"
           id="phoneNumber"
@@ -66,6 +77,7 @@ export default function StepOne({
         />
         <Input
           label="Portfolio/Github Link"
+          disabled={step !== 0}
           placeholder="github.com/rishipurwar1"
           id="portfolioGithubLink"
           errorMessage={errors.portfolioGithubLink?.message}
@@ -77,7 +89,7 @@ export default function StepOne({
           }}
           {...register("portfolioGithubLink")}
         />
-      </div>
-    </AnimatedDiv>
+      </AnimatedDiv>
+    </StepContainer>
   );
 }

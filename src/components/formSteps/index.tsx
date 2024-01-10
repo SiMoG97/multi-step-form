@@ -4,3 +4,4 @@ export { default as StepThree } from "./StepThree";
 export { default as StepFour } from "./StepFour";
 export { default as StepFive } from "./StepFive";
 export { default as ProgressBar } from "./ProgressBar";
+export { default as StepContainer } from "./StepContainer";

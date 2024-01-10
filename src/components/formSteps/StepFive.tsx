@@ -1,12 +1,9 @@
-import AnimatedDiv from "@components/AnimatedDiv";
 import CongratsIcon from "@assets/congrats.svg";
+import { StepContainer } from ".";
 
 export default function StepFive() {
   return (
-    <AnimatedDiv
-      className="flex min-h-[396px] flex-col items-center justify-center text-center"
-      direction={1}
-    >
+    <StepContainer className="flex flex-col items-center justify-center text-center">
       <img src={CongratsIcon} alt="" />
       <h2 className="mb-7 mt-4 text-2xl font-semibold">Congratulations! 🎉</h2>
       <p className="max-w-[474px] text-sm text-myGray-500">
@@ -14,6 +11,6 @@ export default function StepFive() {
         participating in challenges that match your interests and coding
         experience level.
       </p>
-    </AnimatedDiv>
+    </StepContainer>
   );
 }

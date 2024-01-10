@@ -1,7 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AnimatePresence } from "framer-motion";
 
 import { Button } from "@components/formElements";
 import {
@@ -19,8 +18,6 @@ function App() {
   const [step, setStep] = useState(0);
 
   const nextBtnRef = useRef<HTMLButtonElement>(null);
-
-  const [direction, setDirection] = useState(1);
 
   const methods = useForm<FormInputsT>({ resolver: zodResolver(formSchema) });
   const { handleSubmit, trigger } = methods;
@@ -40,10 +37,7 @@ function App() {
       goNext = await trigger(["challengePref"]);
     }
     if (goNext) {
-      setStep((prev) => {
-        setDirection(1);
-        return prev + 1;
-      });
+      setStep((prev) => prev + 1);
     }
   };
 
@@ -60,10 +54,8 @@ function App() {
           </p>
         </div>
 
-        <div className="w-full overflow-hidden rounded-2xl bg-white p-3 shadow-custom xs:p-5 md:p-8 ">
-          <AnimatePresence custom={1} mode="wait">
-            {step !== 4 ? <ProgressBar step={step} /> : null}
-          </AnimatePresence>
+        <div className="w-full overflow-hidden rounded-2xl bg-white shadow-custom ">
+          <ProgressBar step={step} />
           <FormProvider {...methods}>
             <form
               onSubmit={handleSubmit((data) => {
@@ -71,68 +63,46 @@ function App() {
                 setStep((prev) => prev + 1);
               })}
             >
-              <div className="py-8">
-                <AnimatePresence custom={direction} mode="wait">
-                  {step === 0 ? (
-                    <StepOne
-                      direction={direction}
-                      key="one"
-                      nextBtnRef={nextBtnRef}
-                    />
-                  ) : null}
-                  {step === 1 ? (
-                    <StepTwo direction={direction} key="two" />
-                  ) : null}
-                  {step === 2 ? (
-                    <StepThree direction={direction} key="three" />
+              <AnimatedDiv step={step} className="flex items-center py-8">
+                <StepOne step={step} nextBtnRef={nextBtnRef} />
+                <StepTwo step={step} />
+                <StepThree step={step} />
+                <StepFour step={step} />
+                <StepFive />
+              </AnimatedDiv>
+              <AnimatedDiv
+                className="px-3 xs:px-5 md:px-8"
+                key="buttons"
+                step={step === 4 ? 1 : 0}
+              >
+                <div className="flex flex-row-reverse justify-between border-t-2 border-myGray-200 py-3 xs:py-5  md:py-8">
+                  {step < 3 ? (
+                    <Button
+                      type="button"
+                      onClick={nextStepsHandler}
+                      ref={nextBtnRef}
+                      variant={"primary"}
+                    >
+                      Next Step
+                    </Button>
                   ) : null}
                   {step === 3 ? (
-                    <StepFour direction={direction} key="four" />
+                    <Button type="submit" variant={"primary"}>
+                      Submit
+                    </Button>
                   ) : null}
-                  {step === 4 ? <StepFive key="five" /> : null}
-                  {/* {RenderStep()} */}
-                </AnimatePresence>
-              </div>
-              <AnimatePresence mode="wait">
-                {step !== 4 ? (
-                  <AnimatedDiv
-                    key="buttons"
-                    direction={1}
-                    className="flex flex-row-reverse justify-between border-t-2 border-myGray-200 pt-8"
-                  >
-                    {step < 3 ? (
-                      <Button
-                        type="button"
-                        onClick={nextStepsHandler}
-                        ref={nextBtnRef}
-                        variant={"primary"}
-                      >
-                        Next Step
-                      </Button>
-                    ) : null}
-                    {step === 3 ? (
-                      <Button type="submit" variant={"primary"}>
-                        Submit
-                      </Button>
-                    ) : null}
 
-                    {step !== 0 ? (
-                      <Button
-                        type="button"
-                        onClick={() =>
-                          setStep((prev) => {
-                            setDirection(-1);
-                            return prev - 1;
-                          })
-                        }
-                        variant={"secondary"}
-                      >
-                        Go Back
-                      </Button>
-                    ) : null}
-                  </AnimatedDiv>
-                ) : null}
-              </AnimatePresence>
+                  {step !== 0 ? (
+                    <Button
+                      type="button"
+                      onClick={() => setStep((prev) => prev - 1)}
+                      variant={"secondary"}
+                    >
+                      Go Back
+                    </Button>
+                  ) : null}
+                </div>
+              </AnimatedDiv>
             </form>
           </FormProvider>
         </div>

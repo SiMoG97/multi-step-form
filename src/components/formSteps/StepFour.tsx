@@ -1,19 +1,24 @@
 import { FormInputsT } from "@/formSchema";
-import AnimatedDiv from "@components/AnimatedDiv";
 import { useFormContext } from "react-hook-form";
+import { StepContainer } from ".";
+import AnimatedDiv from "../AnimatedDiv";
 
-export default function StepFour({ direction }: { direction: number }) {
+export default function StepFour({ step }: { step: number }) {
   const { getValues } = useFormContext<FormInputsT>();
   const allValues = getValues();
   return (
-    <AnimatedDiv className="flex flex-col gap-7" direction={direction}>
-      <div>
-        <h2 className="mb-2 text-2xl font-medium">Review and Confirm</h2>
-        <p className="text-sm text-myGray-500">
-          Please review your information to make sure everything is accurate.
-        </p>
-      </div>
-      <div className="grid gap-6 md:grid-cols-3 ">
+    <StepContainer className="flex flex-col gap-7">
+      <AnimatedDiv
+        variant="staggered"
+        className="grid gap-6 md:grid-cols-3 "
+        shouldAnimate={step === 3}
+      >
+        <div className="mb-4">
+          <h2 className="mb-2 text-2xl font-medium">Review and Confirm</h2>
+          <p className="text-sm text-myGray-500">
+            Please review your information to make sure everything is accurate.
+          </p>
+        </div>
         <ReviewCard title="Full Name" details={allValues.fullName} />
         <ReviewCard title="Email Address" details={allValues.email} />
         <ReviewCard title="Phone Number" details={allValues.phoneNumber} />
@@ -26,15 +31,23 @@ export default function StepFour({ direction }: { direction: number }) {
         <ReviewCard title="Skill Level" details={allValues.skillLevel} />
         <ReviewCard title="Challenge Preference">
           <ul>
-            {allValues.challengePref.map((challenge) => (
-              <li key={challenge} className="font-medium">
-                {challenge}
-              </li>
-            ))}
+            {allValues.challengePref &&
+              allValues.challengePref.map((challenge) => (
+                <li key={challenge} className="font-medium">
+                  {challenge}
+                </li>
+              ))}
           </ul>
         </ReviewCard>
-      </div>
-    </AnimatedDiv>
+        {/* {allValues.portfolioGithubLink ? (
+          <ReviewCard
+            title="Portfolio/GitHub Link"
+            details={allValues.portfolioGithubLink}
+          />
+        ) : null}
+      */}
+      </AnimatedDiv>
+    </StepContainer>
   );
 }
 
